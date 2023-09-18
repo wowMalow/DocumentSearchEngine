@@ -61,7 +61,7 @@ else:
 
 # Search for similar answers
 # It returns list or Record objects with ids and content (Record.payload["content"])
-responce = faq_database.search(query="Закупки у ЕИ санкционные заказчики нигде", limit=5)
+responce = faq_database.search(query="text request example", limit=5)
 
 # If faq changed you can update/delete content and vectors in DB
 faq_database.update_vectors(faq_update)
