@@ -72,10 +72,14 @@ class QdrantDatabase:
             
         if isinstance(ids, int):
             ids = [ids]
+        
+        ids_to_delete = [
+            item.id for item in self.get_by_ids(ids, collection_name=collection_name)
+        ]
             
         self._index.delete(
             collection_name=collection_name,
-            points_selector=PointIdsList(points=ids),
+            points_selector=PointIdsList(points=ids_to_delete),
         )
             
     def search(
@@ -379,13 +383,17 @@ class FAQQdrantDatabase(QdrantDatabase):
         if isinstance(ids, int):
             ids = [ids]
             
+        ids_to_delete = [
+            item.id for item in self.get_by_ids(ids, collection_name=self._questions_collection_name)
+        ]
+            
         self._index.delete(
             collection_name=self._questions_collection_name,
-            points_selector=PointIdsList(points=ids),
+            points_selector=PointIdsList(points=ids_to_delete),
         )
         self._index.delete(
             collection_name=self._answers_collection_name,
-            points_selector=PointIdsList(points=ids),
+            points_selector=PointIdsList(points=ids_to_delete),
         )
             
     def search(
